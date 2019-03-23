@@ -4,11 +4,29 @@ using System.Text;
 
 namespace bankapp
 {
-    public class Bank
+    static class Bank
     {
-       public Account CreatAccount(string email)
+        /// <summary>
+        /// Create a bank account
+        /// </summary>
+        /// <param name="emailAddress">Email address for the account</param>
+        /// <param name="accountType">Checking or Savings</param>
+        /// <param name="initialDeposit">Amount to deposit</param>
+        /// <returns></returns>
+        public static Account CreateAccount(string emailAddress, string accountType, decimal initialDeposit)
         {
-            return new Account();
+            var account = new Account
+            {
+                EmailAdress = emailAddress,
+                AccountType = accountType,
+            };
+
+            if (initialDeposit > 0)
+            {
+                account.Deposit(initialDeposit);                
+            }
+
+            return account;
         }
     }
 }

@@ -16,6 +16,10 @@ namespace bankapp
         #region Properties
         public int AccountNumber { get; private set; }
         public string EmailAdress { get; set; }
+
+        /// <summary>
+        /// Balance amount in the bank for this account
+        /// </summary>
         public decimal Balance { get; private set; }
 
         public string AccountType { get; set; }
@@ -28,7 +32,6 @@ namespace bankapp
             
             AccountNumber = ++lastAccountNumber;
             CreatedDate = DateTime.Now;
-
         }
 
         #endregion
