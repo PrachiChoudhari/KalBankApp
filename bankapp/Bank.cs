@@ -1,32 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
-namespace bankapp
+namespace BankApp
 {
     static class Bank
     {
-        /// <summary>
-        /// Create a bank account
-        /// </summary>
-        /// <param name="emailAddress">Email address for the account</param>
-        /// <param name="accountType">Checking or Savings</param>
-        /// <param name="initialDeposit">Amount to deposit</param>
-        /// <returns></returns>
-        public static Account CreateAccount(string emailAddress, string accountType, decimal initialDeposit)
+        private static List<Account> accounts = new List<Account>();
+
+        public static Account CreateAccount
+            (string emailAddress, AccountType accountType,
+            decimal initialDeposit)
         {
-            var account = new Account
+            var a1 = new Account
             {
-                EmailAdress = emailAddress,
-                AccountType = accountType,
+                EmailAddress = emailAddress,
+                AccountType = accountType
             };
 
             if (initialDeposit > 0)
             {
-                account.Deposit(initialDeposit);                
+                a1.Deposit(initialDeposit);
             }
 
+            accounts.Add(a1);
+            return a1;
+        }
+
+        public static IEnumerable<Account> GetAllAccountsForUser()
+        {
+            return accounts;
+        }
+
+        private static Account GetAccountByAccountNumber
+            (int accountNumber)
+        {
+            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountNumber);
+
+            if (account == null)
+            {
+                //Throw exception
+                return null;
+            }
             return account;
         }
+
+        public static void Deposit(int accountNumber,
+            decimal amount)
+        {
+            var account = GetAccountByAccountNumber(accountNumber);
+            account.Deposit(amount);
+        }
+
+        public static void Withdraw(int accountNumber,
+                decimal amount)
+        {
+            var account = GetAccountByAccountNumber(accountNumber);
+            account.Withdraw(amount);
+        }
+
     }
 }
